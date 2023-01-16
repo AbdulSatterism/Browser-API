@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local storage </title>
+</head>
+
+<body>
+    <h1>Local storage</h1>
+    <input type="text" id="text-field">
+    <button onclick="addItem()">add item</button>
+    <br>
+    <ul id="products">
+
+    </ul>
+    <br>
+    <button>place product</button>
+
+    <script>
+        const addItem = () => {
+            const inputField = document.getElementById('text-field');
+            const name = inputField.value;
+            // display
+            displayProduct(name)
+            // set storage 
+            addProductStorage(name)
+            // clear 
+            inputField.value = ''
+        }
+
+        const displayProduct = (name) => {
+            const ul = document.getElementById('products');
+            const li = document.createElement('li');
+            li.innerText = name;
+            ul.appendChild(li);
+        }
+        // check local storage 
+
+        const getCart = () => {
+            const cart = localStorage.getItem('cart');
+            let cartObj;
+            if (cart) {
+                cartObj = JSON.parse(cart);
+            }
+            else {
+                cartObj = {};
+            }
+            return cartObj;
+        }
+
+        const addProductStorage = (name) => {
+            const cart = getCart();
+            cart[name] = 1;
+            const cartStringify = JSON.stringify(cart);
+            localStorage.setItem('cart', cartStringify)
+        }
+
+    </script>
+</body>
+
+</html>
